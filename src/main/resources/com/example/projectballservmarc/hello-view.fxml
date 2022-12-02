@@ -8,10 +8,11 @@
    <children>
    
           <Label fx:id="welcomeText" />
-      <ImageView fx:id="imagenpelota" fitHeight="150.0" fitWidth="200.0" layoutX="250.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@imagen.png" />
-         </image></ImageView>
+
        <Button layoutX="300.0" layoutY="350.0" onAction="#onRunButtonClick" text="RUN" textAlignment="CENTER" />
+       <ImageView fx:id="imagenpelota" fitHeight="150.0" fitWidth="200.0" layoutX="250.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@imagen.png" />
+           </image></ImageView>
    </children>
 </Pane>

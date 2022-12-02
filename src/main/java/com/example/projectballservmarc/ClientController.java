@@ -3,6 +3,7 @@ package com.example.projectballservmarc;
 import com.example.projectballservmarc.elements.Position;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 import java.io.*;
@@ -17,6 +18,12 @@ public class ClientController {
     private ImageView imagenpelotacliente;
 
     @FXML
+    private TextField ipclient;
+
+    @FXML
+    private TextField portclient;
+
+    @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
@@ -29,6 +36,14 @@ public class ClientController {
             public void run() {
                 int numPuerto = 8100;
                 String host = "127.0.0.1";
+
+                if (!ipclient.getText().equals("")){
+                    host = ipclient.getText();
+                }
+
+                if (!portclient.getText().equals("")){
+                    numPuerto = Integer.parseInt(portclient.getText());
+                }
 
 
                 try (
