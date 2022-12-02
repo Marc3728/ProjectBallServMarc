@@ -46,7 +46,7 @@ public class HelloController {
 
 
 
-                            if(!clientConection.getConection() && !clientConection.getRepetido() && t == null){
+                            if(!clientConection.getConection() && !clientConection.getRepetido()){
                                 t = new Thread(clientConection);
                                 t.start();
                                 System.out.println("crea");
