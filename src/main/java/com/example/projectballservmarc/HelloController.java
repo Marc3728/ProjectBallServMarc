@@ -48,20 +48,14 @@ public class HelloController {
                             ClientConection clientConection =  new ClientConection(socketServidor,ballTask);
                             while (true) {    // Acepta una conexión de cliente tras otra
 
-
-
-
                                 if(!clientConection.getConection() && !clientConection.getRepetido()){
                                     t = new Thread(clientConection);
                                     t.start();
-                                    System.out.println("crea");
+                                    System.out.println("CREADA CONEXION");
                                 }else if (clientConection.getConection()){
                                     clientConection = new ClientConection(socketServidor, ballTask);
-                                    System.out.println("crea");
+                                    System.out.println("ACTUALIZADA CONEXION");
                                 }
-
-
-
 
 
                             }
