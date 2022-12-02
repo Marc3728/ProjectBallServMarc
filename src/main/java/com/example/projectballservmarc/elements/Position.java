@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Position implements Serializable {
     private float layoutY;
     private float layoutX;
+    private boolean arrancado;
 
     private Direccion direccionx;
     private Direccion direcciony;
@@ -15,6 +16,8 @@ public class Position implements Serializable {
 
         direccionx=Direccion.DERECHA;
         direcciony=Direccion.ABAJO;
+
+        arrancado=true;
     }
 
     public void setLayoutY(float layoutY) {
@@ -51,6 +54,19 @@ public class Position implements Serializable {
         this.setLayoutX(this.getLayoutX()+direccionx.getValue());
         this.setLayoutY(this.getLayoutY()+direcciony.getValue());
     }
+
+    public boolean getArrancado() {
+        return arrancado;
+    }
+
+    public void changeState(){
+        if(arrancado)
+            arrancado=false;
+        else
+            arrancado=true;
+    }
+
+
 
     @Override
     public String toString() {

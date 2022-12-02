@@ -32,10 +32,16 @@ public class BallTask extends Task<Position> implements Serializable {
         protected Position call() throws Exception {
             try {
                 while (true){
+                    boolean arrancado = position.getArrancado();
+                    if (arrancado){
+                        position.chanegXY();
+                        Thread.sleep(100);
+                        updateValue(new Position(position.getLayoutX(),position.getLayoutY()));
+                    } else {
+                        updateValue(new Position(position.getLayoutX(),position.getLayoutY()));
+                    }
 
-                    position.chanegXY();
-                    Thread.sleep(100);
-                    updateValue(new Position(position.getLayoutX(),position.getLayoutY()));
+
                 }
 
             } catch (Exception e){
@@ -43,6 +49,10 @@ public class BallTask extends Task<Position> implements Serializable {
             }
 
             return position;
+        }
+
+        public void changeState(){
+            position.changeState();
         }
 
         public Position getPosition() {

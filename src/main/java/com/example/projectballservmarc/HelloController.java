@@ -22,57 +22,64 @@ public class HelloController {
     private ImageView imagenpelota;
 
     Thread t;
-
+    BallTask ballTask;
+    Thread recibirconexiones;
     @FXML
     protected void onRunButtonClick() {
-
-            BallTask ballTask =  new BallTask(imagenpelota);
-            Thread hilo =  new Thread(ballTask);
-            hilo.start();
-
-
-            Thread recibirConexiones = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    int numPuerto = 8100;
-
-                    try (ServerSocket socketServidor = new ServerSocket(numPuerto)) {
-
-                        System.out.printf("Creado socket de servidor en puerto %d. Esperando conexiones de clientes.\n", numPuerto);
-
-                        ClientConection clientConection =  new ClientConection(socketServidor,ballTask);
-                        while (true) {    // Acepta una conexión de cliente tras otra
+            if (t==null){
+                ballTask =  new BallTask(imagenpelota);
+                t =  new Thread(ballTask);
+                t.start();
+            } else {
+                ballTask.changeState();
+            }
 
 
+            if (recibirconexiones==null){
+                recibirconexiones = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int numPuerto = 8100;
+
+                        try (ServerSocket socketServidor = new ServerSocket(numPuerto)) {
+
+                            System.out.printf("Creado socket de servidor en puerto %d. Esperando conexiones de clientes.\n", numPuerto);
+
+                            ClientConection clientConection =  new ClientConection(socketServidor,ballTask);
+                            while (true) {    // Acepta una conexión de cliente tras otra
 
 
-                            if(!clientConection.getConection() && !clientConection.getRepetido()){
-                                t = new Thread(clientConection);
-                                t.start();
-                                System.out.println("crea");
-                            }else if (clientConection.getConection()){
-                                clientConection = new ClientConection(socketServidor, ballTask);
-                                System.out.println("crea");
+
+
+                                if(!clientConection.getConection() && !clientConection.getRepetido()){
+                                    t = new Thread(clientConection);
+                                    t.start();
+                                    System.out.println("crea");
+                                }else if (clientConection.getConection()){
+                                    clientConection = new ClientConection(socketServidor, ballTask);
+                                    System.out.println("crea");
+                                }
+
+
+
+
+
                             }
 
+                        } catch (IOException ex) {
 
+                            System.out.println("Excepción de E/S");
 
+                            ex.printStackTrace();
 
+                            System.exit(1);
 
                         }
-
-                    } catch (IOException ex) {
-
-                        System.out.println("Excepción de E/S");
-
-                        ex.printStackTrace();
-
-                        System.exit(1);
-
                     }
-                }
-            });
-            recibirConexiones.start();
+                });
+                recibirconexiones.start();
+            }
+
 
     }
 
